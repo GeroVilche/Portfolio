@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gerónimo Vilche — Desarrollo web</title>
+  <meta name="description" content="Desarrollo de páginas web para negocios locales. Landing pages, sistemas de turnos y mantenimiento." />
+
+  <!-- Tipografías -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <!-- Estilos: separados por responsabilidad para poder escalar el proyecto -->
+  <link rel="stylesheet" href="variables.css" />
+  <link rel="stylesheet" href="base.css" />
+  <link rel="stylesheet" href="main.css" />
+</head>
+<body>
+
+  <!-- ============================== HEADER ============================== -->
+  <header class="header">
+    <div class="header__inner">
+      <a href="#" class="header__logo">
+        <!-- Cuando esté listo el isotipo: reemplazar por <img class="header__logo-mark" src="..." alt="GeroDev"> -->
+        <span class="header__logo-bracket">&lt;</span>GeroDev<span class="header__logo-bracket">/&gt;</span>
+      </a>
+      <nav class="header__nav">
+        <a href="#sobre-mi">Sobre mí</a>
+        <a href="#planes">Planes</a>
+        <a href="#portfolio">Portfolio</a>
+        <a href="#contacto">Contacto</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ============================== HERO ============================== -->
+    <section class="hero container">
+      <div class="hero__content">
+        <p class="hero__eyebrow">Desarrollo web · Tandil</p>
+        <h1 class="hero__title">
+          Sitios web que <em>resuelven</em>, no solo que se ven bien.
+        </h1>
+        <p class="hero__subtitle">
+          Soy Gerónimo Vilche. Diseño y desarrollo páginas para negocios
+          locales — rápidas, claras y pensadas para conseguir más
+          clientes. Antes de escribir una línea de código me tomo el
+          tiempo de entender qué necesita tu negocio: esa atención al
+          detalle es la base de cada proyecto que armo.
+        </p>
+        <div class="hero__actions">
+          <a href="#planes" class="btn btn--accent">Ver planes</a>
+          <a href="#contacto" class="btn btn--outline">Hablemos por WhatsApp</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================== SOBRE MÍ ============================== -->
+    <section class="about" id="sobre-mi">
+      <div class="container about__grid">
+        <h2 class="about__label">Sobre mí</h2>
+        <div class="about__card">
+          <p>
+            Aprendí a programar por necesidad de crear algo útil: páginas
+            que no solo se vean bien, sino que ayuden a un negocio a
+            conseguir más clientes.
+          </p>
+          <blockquote class="about__quote">
+            Sé lo que es atender a alguien que necesita una solución rápida
+            y bien hecha — es lo mismo que busco transmitir en cada página
+            que armo: simple, clara, y que resuelva lo que el negocio
+            necesita, sin vueltas.
+          </blockquote>
+          <p>
+            Hoy estoy desarrollando mi primer proyecto para un negocio
+            local, con la idea de ir sumando clientes de a poco y, con el
+            tiempo, dedicarme de lleno al desarrollo web.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================== PLANES ============================== -->
+    <section class="section" id="planes">
+      <div class="container">
+        <p class="section__eyebrow">Planes</p>
+        <h2 class="section__title">Elegí lo que necesita tu negocio</h2>
+
+        <div class="plans__tabs" role="tablist">
+          <button class="plans__tab is-active" data-target="panel-desarrollo" role="tab" aria-selected="true">Desarrollo</button>
+          <button class="plans__tab" data-target="panel-mantenimiento" role="tab" aria-selected="false">Mantenimiento</button>
+        </div>
+
+        <!-- Panel: Desarrollo -->
+        <div class="plans__grid plans__panel is-active" id="panel-desarrollo" role="tabpanel">
+
+          <article class="plan-card plan-card--dev">
+            <h3 class="plan-card__name">Básico</h3>
+            <ul class="plan-card__items">
+              <li>Landing page de una sola página (responsive, se adapta a celular y PC)</li>
+              <li>Secciones de presentación, servicios y precios</li>
+              <li>Ubicación con mapa integrado</li>
+              <li>Boton de contacto directo por WhatsApp</li>
+            </ul>
+            <p class="plan-card__price plan-card__price--dev">
+              Desde USD 150
+              <span>Perfecto si necesitás una presencia online clara y rápida, sin funciones adicionales.</span>
+            </p>
+            <a href="#contacto" class="btn btn--accent">Elegir</a>
+          </article>
+
+          <article class="plan-card plan-card--dev">
+            <h3 class="plan-card__name">Intermedio</h3>
+            <ul class="plan-card__items">
+              <li>Todo lo del plan Básico</li>
+              <li>Formulario de reserva de turnos integrado a la página</li>
+              <li>Vista de horarios disponibles y ocupados en tiempo real</li>
+              <li>Notificación automática por WhatsApp al confirmar el turno</li>
+              <li>Validación de datos para evitar errores de carga</li>
+            </ul>
+            <p class="plan-card__price plan-card__price--dev">
+              Desde USD 300
+              <span>Pensado para negocios que atienden por turno y quieren ordenar su agenda sin perder mensajes.</span>
+            </p>
+            <a href="#contacto" class="btn btn--accent">Elegir</a>
+          </article>
+
+          <article class="plan-card plan-card--dev">
+            <h3 class="plan-card__name">Avanzado</h3>
+            <ul class="plan-card__items">
+              <li>Todo lo del plan Intermedio</li>
+              <li>Panel de administración privado para editar precios, fotos y productos vos mismo</li>
+              <li>Cátalogo de productos con imágenes y precios</li>
+              <li>Mínimo mantenimiento externo necesario</li>
+              <li>Optimización SEO para aparecer mejor en Google y en búsquedas locales</li>
+            </ul>
+            <p class="plan-card__price plan-card__price--dev">
+              A cotizar
+              <span>Ideal si además de mostrar tu negocio, querés vender productos y manejar todo el contenido de forma autónoma.</span>
+            </p>
+            <a href="#contacto" class="btn btn--accent">Elegir</a>
+          </article>
+
+        </div>
+
+        <!-- Panel: Mantenimiento -->
+        <div class="plans__grid plans__panel" id="panel-mantenimiento" role="tabpanel" hidden>
+
+          <article class="plan-card plan-card--maint">
+            <h3 class="plan-card__name">Básico</h3>
+            <ul class="plan-card__items">
+              <li>Hasta 2 cambios de contenido por mes (textos, precios, imágenes)</li>
+              <li>Renovación y gestión del dominio incluida</li>
+              <li>Respuesta a consultas en 48-72 hs</li>
+              <li>Sin cambios de diseño o estructura</li>
+            </ul>
+            <p class="plan-card__price plan-card__price--maint">
+              Desde USD 20
+              <span>Pensado para el Plan de Desarrollo Básico e Intermedio.</span>
+            </p>
+            <a href="#contacto" class="btn btn--accent">Elegir</a>
+          </article>
+
+          <article class="plan-card plan-card--maint">
+            <h3 class="plan-card__name">Intermedio</h3>
+            <ul class="plan-card__items">
+              <li>Todo lo del Básico</li>
+              <li>Hasta 5 cambios de contenido por mes</li>
+              <li>Monitoreo de que el sistema de turnos funcione correctamente</li>
+              <li>Respuesta a consultas en 24-48 hs</li>
+            </ul>
+            <p class="plan-card__price plan-card__price--maint">
+              Desde USD 30
+              <span>Pensado para el plan de Desarrollo Intermedio.</span>
+            </p>
+            <a href="#contacto" class="btn btn--accent">Consultar</a>
+          </article>
+
+          <article class="plan-card plan-card--maint">
+            <h3 class="plan-card__name">Avanzado</h3>
+            <ul class="plan-card__items">
+              <li>Todo lo del Intermedio</li>
+              <li>Cambios de contenido ilimitados razonables</li>
+              <li>Soporte técnico prioritario (mismo dia o 24 hs)</li>
+              <li>Backups periódicos de la base de datos</li>
+              <li>Actualizaciones de seguridad del backend/panel admin</li>
+              <li>Ajustes menores de funcionalidad incluidos</li>
+            </ul>
+            <p class="plan-card__price plan-card__price--maint">
+              Desde USD 50
+              <span>Pensado para el plan de Desarrollo Avanzado.</span>
+            </p>
+            <a href="#contacto" class="btn btn--accent">Elegir</a>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================== PORTFOLIO ============================== -->
+    <section class="section" id="portfolio" style="background: var(--color-ink-soft);">
+      <div class="container">
+        <p class="section__eyebrow">Trabajos</p>
+        <h2 class="section__title">Portfolio</h2>
+
+        <div class="portfolio__grid">
+          <article class="project-card">
+            <p class="project-card__status">En desarrollo</p>
+            <h3 class="project-card__title">Lavadero — landing con turnos</h3>
+            <p class="project-card__desc">
+              Página para un lavadero de autos: promoción del negocio,
+              sistema de reserva de turnos confirmados por WhatsApp y
+              sección de venta de productos.
+            </p>
+          </article>
+
+          <!--
+            Próximos proyectos: agregar un <article class="project-card">
+            por cada trabajo nuevo, siguiendo la misma estructura.
+          -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================== CONTACTO ============================== -->
+    <section class="section contact" id="contacto">
+      <div class="container">
+        <h2 class="contact__title">¿Tenés un negocio y queres una pagina para expandirte?</h2>
+        <p class="contact__subtitle">Contame qué necesitás y armamos el plan a medida.</p>
+
+        <form class="contact__form" id="contact-form">
+          <div class="form__group">
+            <label for="contact-name">Nombre</label>
+            <input type="text" id="contact-name" name="nombre" required>
+          </div>
+
+          <div class="form__group">
+            <label for="contact-business">Negocio / rubro</label>
+            <input type="text" id="contact-business" name="negocio" required>
+          </div>
+
+          <div class="form__group">
+            <label for="contact-plan">¿Qué plan te interesa?</label>
+            <select id="contact-plan" name="plan">
+              <option value="No estoy seguro todavía">No estoy seguro todavía</option>
+              <option value="Básico (Desarrollo)">Básico (Desarrollo)</option>
+              <option value="Con reservas (Desarrollo)">Con reservas (Desarrollo)</option>
+              <option value="Avanzado (Desarrollo)">Avanzado (Desarrollo)</option>
+              <option value="Básico (Mantenimiento)">Básico (Mantenimiento)</option>
+              <option value="Intermedio (Mantenimiento)">Intermedio (Mantenimiento)</option>
+              <option value="Avanzado (Mantenimiento)">Avanzado (Mantenimiento)</option>
+            </select>
+          </div>
+
+          <div class="form__group">
+            <label for="contact-message">Contame brevemente qué necesitás</label>
+            <textarea id="contact-message" name="mensaje" rows="4" required></textarea>
+          </div>
+
+          <button type="submit" class="btn btn--accent">Enviar por WhatsApp</button>
+        </form>
+
+        <p class="contact__divider">o escribime directo</p>
+
+        <a
+          href="https://wa.me/5492494009695?text=Hola%20Ger%C3%B3nimo!%20Vi%20tu%20portfolio%20y%20quiero%20consultar%20por%20una%20p%C3%A1gina."
+          class="btn btn--outline"
+          target="_blank"
+          rel="noopener"
+        >
+          Escribime por WhatsApp
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============================== FOOTER ============================== -->
+  <footer class="footer">
+    <p>Gerónimo Vilche — Desarrollo web · Tandil, Argentina</p>
+  </footer>
+
+  <script>
+    // Toggle simple entre los paneles de planes (Desarrollo / Mantenimiento)
+    const planTabs = document.querySelectorAll('.plans__tab');
+    planTabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        planTabs.forEach(t => {
+          t.classList.remove('is-active');
+          t.setAttribute('aria-selected', 'false');
+        });
+        tab.classList.add('is-active');
+        tab.setAttribute('aria-selected', 'true');
+
+        document.querySelectorAll('.plans__panel').forEach(panel => {
+          const isTarget = panel.id === tab.dataset.target;
+          panel.classList.toggle('is-active', isTarget);
+          panel.hidden = !isTarget;
+        });
+      });
+    });
+
+    // Formulario de contacto: arma el mensaje y lo manda a WhatsApp
+    const WHATSAPP_NUMBER = '5492494009695';
+    const contactForm = document.getElementById('contact-form');
+
+    contactForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+
+      const nombre = contactForm.nombre.value.trim();
+      const negocio = contactForm.negocio.value.trim();
+      const plan = contactForm.plan.value;
+      const mensaje = contactForm.mensaje.value.trim();
+
+      if (!nombre || !negocio || !mensaje) return;
+
+      const texto =
+        `Hola Gerónimo! Soy ${nombre}, de ${negocio}.\n` +
+        `Plan de interés: ${plan}.\n` +
+        `${mensaje}`;
+
+      const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(texto)}`;
+      window.open(url, '_blank', 'noopener');
+    });
+  </script>
+
+</body>
+</html>
