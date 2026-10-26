@@ -1,0 +1,75 @@
+/* ==========================================================================
+   VARIABLES
+   Toda la identidad visual sale de acá: colores, tipografías, tamaños y espacios.
+   Si cambio un valor acá, cambia en toda la página.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   COLORES — MODO OSCURO (el de la marca, y el que se usa por defecto)
+   El tema lo decide el script del <head> de index.html poniendo data-tema="oscuro"
+   o data-tema="claro" en <html>. Acá defino los dos juegos de colores con los
+   MISMOS nombres: el resto del CSS solo usa var(--color-...) y no sabe en qué tema está.
+   -------------------------------------------------------------------------- */
+:root,
+:root[data-tema="oscuro"] {
+  --color-fondo: #0e0f12;          /* fondo de la página */
+  --color-superficie: #16181c;     /* tarjetas */
+  --color-borde: #25282e;          /* líneas y bordes */
+  --color-texto: #ecedee;          /* texto principal */
+  --color-texto-suave: #8b8f98;    /* texto secundario */
+  --color-acento: #7c9cff;         /* color de marca: links, botón principal, detalles */
+  --color-acento-hover: #9db5ff;
+  --color-sobre-acento: #0e0f12;   /* texto encima del acento (botón principal) */
+  --color-acento-suave: rgba(124, 156, 255, 0.12); /* fondos tenues con el acento */
+
+  color-scheme: dark; /* así los controles nativos (scrollbar, etc.) también se ven oscuros */
+}
+
+/* --------------------------------------------------------------------------
+   COLORES — MODO CLARO
+   Ojo: el acento NO es el mismo que en oscuro. #7c9cff sobre blanco casi no se lee
+   (poco contraste), así que uso el mismo tono pero más oscuro.
+   -------------------------------------------------------------------------- */
+:root[data-tema="claro"] {
+  --color-fondo: #f7f7f8;
+  --color-superficie: #ffffff;
+  --color-borde: #e2e3e6;
+  --color-texto: #16181c;
+  --color-texto-suave: #5f636b;
+  --color-acento: #3b5bdb;
+  --color-acento-hover: #2f4bc0;
+  --color-sobre-acento: #ffffff;
+  --color-acento-suave: rgba(59, 91, 219, 0.08);
+
+  color-scheme: light;
+}
+
+:root {
+  /* --- Tipografías --- */
+  --font-sans: "IBM Plex Sans", -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", "Consolas", monospace;
+
+  /* --- Tamaños de texto ---
+     clamp(mínimo, ideal, máximo): el título crece con el ancho de la pantalla (vw)
+     pero nunca baja del mínimo ni pasa del máximo. Así no necesito media queries para el texto. */
+  --texto-chico: 0.875rem;
+  --texto-base: 1rem;
+  --texto-medio: 1.125rem;
+  --texto-grande: 1.375rem;
+  --titulo-seccion: clamp(1.75rem, 4vw, 2.5rem);
+  --titulo-hero: clamp(2.4rem, 7vw, 4.25rem);
+
+  /* --- Espacios --- */
+  --espacio-xs: 0.5rem;
+  --espacio-sm: 1rem;
+  --espacio-md: 1.5rem;
+  --espacio-lg: 3rem;
+  --espacio-xl: 6rem;
+
+  /* --- Otros --- */
+  --ancho-maximo: 1080px;
+  --radio: 4px;              /* bordes casi rectos: va con el cuadrado del logo */
+  --alto-header: 4.5rem;
+  --transicion: 200ms ease;
+  --transicion-tema: 300ms ease; /* lo que tardan los colores al cambiar de tema */
+}

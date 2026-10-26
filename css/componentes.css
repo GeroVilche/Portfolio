@@ -1,0 +1,183 @@
+/* ==========================================================================
+   COMPONENTES
+   Piezas que se repiten en varias secciones: contenedor, etiqueta, botones,
+   tags, logo y botón de tema.
+   ========================================================================== */
+
+/* Centra el contenido y le pone un ancho máximo, con aire a los costados en el celu */
+.contenedor {
+  width: 100%;
+  max-width: var(--ancho-maximo);
+  margin-inline: auto;
+  padding-inline: var(--espacio-md);
+}
+
+/* Link "Saltar al contenido": fuera de la pantalla hasta que recibe el foco con Tab */
+.saltar-al-contenido {
+  position: absolute;
+  left: var(--espacio-sm);
+  top: -100px;
+  z-index: 100;
+  padding: var(--espacio-xs) var(--espacio-sm);
+  background-color: var(--color-acento);
+  color: var(--color-sobre-acento);
+  border-radius: var(--radio);
+}
+
+.saltar-al-contenido:focus {
+  top: var(--espacio-sm);
+}
+
+/* Texto chico en mayúsculas y monoespaciada, arriba de cada título ("PROYECTOS", "STACK"...) */
+.etiqueta {
+  font-family: var(--font-mono);
+  font-size: var(--texto-chico);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-acento);
+  margin-bottom: var(--espacio-sm);
+}
+
+/* --------------------------------------------------------------------------
+   BOTONES
+   .boton tiene la forma; .boton--principal y .boton--secundario, el color.
+   -------------------------------------------------------------------------- */
+.boton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--espacio-xs);
+  padding: 0.75rem 1.4rem;
+  border: 1px solid transparent;
+  border-radius: var(--radio);
+  font-weight: 600;
+  font-size: var(--texto-base);
+  line-height: 1.2;
+  transition: background-color var(--transicion), border-color var(--transicion), color var(--transicion),
+    transform var(--transicion);
+}
+
+.boton:active {
+  transform: translateY(1px); /* se "hunde" apenas al apretarlo */
+}
+
+.boton--principal {
+  background-color: var(--color-acento);
+  color: var(--color-sobre-acento);
+}
+
+.boton--principal:hover {
+  background-color: var(--color-acento-hover);
+}
+
+.boton--secundario {
+  border-color: var(--color-borde);
+  color: var(--color-texto);
+}
+
+.boton--secundario:hover {
+  border-color: var(--color-acento);
+  color: var(--color-acento);
+}
+
+/* --------------------------------------------------------------------------
+   TAGS: las etiquetas de tecnologías ("Node.js", "Express"...)
+   -------------------------------------------------------------------------- */
+.tags {
+  display: flex;
+  flex-wrap: wrap; /* si no entran en una línea, bajan a la siguiente */
+  gap: var(--espacio-xs);
+}
+
+.tags li {
+  font-family: var(--font-mono);
+  font-size: var(--texto-chico);
+  padding: 0.3rem 0.7rem;
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio);
+  color: var(--color-texto);
+}
+
+/* Lo que estoy aprendiendo: borde punteado y texto suave, para diferenciarlo de lo que ya uso */
+.tags--aprendiendo li {
+  border-style: dashed;
+  color: var(--color-texto-suave);
+}
+
+/* --------------------------------------------------------------------------
+   LOGO: cuadrado con "GV" (SVG) + el nombre al lado
+   -------------------------------------------------------------------------- */
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.logo__marca {
+  width: 2.25rem;
+  height: 2.25rem;
+  flex-shrink: 0;
+  overflow: visible;
+}
+
+.logo__borde {
+  fill: none;
+  stroke: var(--color-acento);
+  stroke-width: 2.5;
+  transition: stroke var(--transicion-tema);
+}
+
+.logo__letras {
+  fill: var(--color-texto);
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 15px;
+  text-anchor: middle;        /* centra el texto en x="20" */
+  dominant-baseline: middle;  /* y en y="21" */
+  transition: fill var(--transicion-tema);
+}
+
+.logo__nombre {
+  font-weight: 600;
+  font-size: var(--texto-medio);
+  white-space: nowrap;
+}
+
+/* --------------------------------------------------------------------------
+   BOTÓN DE TEMA (sol / luna)
+   -------------------------------------------------------------------------- */
+.boton-tema {
+  width: 2.5rem;
+  height: 2.5rem;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio);
+  color: var(--color-texto-suave);
+  transition: color var(--transicion), border-color var(--transicion);
+}
+
+.boton-tema:hover {
+  color: var(--color-acento);
+  border-color: var(--color-acento);
+}
+
+/* Los dos íconos ocupan la misma celda de la grilla (uno encima del otro) y se muestra uno solo */
+.boton-tema__icono {
+  grid-area: 1 / 1;
+  width: 1.15rem;
+  height: 1.15rem;
+  fill: none;
+  stroke: currentColor; /* toma el color del botón */
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* En modo oscuro muestro el sol (el botón te lleva a claro) y en claro, la luna */
+:root[data-tema="oscuro"] .boton-tema__icono--luna,
+:root[data-tema="claro"] .boton-tema__icono--sol {
+  opacity: 0;
+  transform: rotate(-90deg) scale(0.5);
+}

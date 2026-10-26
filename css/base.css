@@ -1,0 +1,77 @@
+/* ==========================================================================
+   BASE
+   Reset mínimo y estilos de las etiquetas sueltas (body, links, títulos).
+   ========================================================================== */
+
+/* box-sizing: border-box -> el ancho de un elemento incluye su padding y borde.
+   Sin esto, un div de width: 100% con padding se pasa del contenedor. */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  /* Los links del menú (#proyectos, etc.) bajan con scroll suave en vez de saltar.
+     scroll-padding-top: el header es fijo y taparía el título de la sección; así frena antes. */
+  scroll-behavior: smooth;
+  scroll-padding-top: var(--alto-header);
+}
+
+body {
+  font-family: var(--font-sans);
+  font-size: var(--texto-base);
+  line-height: 1.65;
+  color: var(--color-texto);
+  background-color: var(--color-fondo);
+  -webkit-font-smoothing: antialiased;
+  /* Al cambiar de tema, el fondo y el texto pasan suave (ver también css/animaciones.css) */
+  transition: background-color var(--transicion-tema), color var(--transicion-tema);
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul {
+  list-style: none;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  line-height: 1.15;
+  font-weight: 600;
+  letter-spacing: -0.02em; /* los títulos grandes se ven mejor un poco más apretados */
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* Contorno de foco visible solo al navegar con teclado (no aparece al hacer clic con el mouse) */
+:focus-visible {
+  outline: 2px solid var(--color-acento);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* Color de la selección de texto, con el acento de la marca */
+::selection {
+  background-color: var(--color-acento);
+  color: var(--color-sobre-acento);
+}
