@@ -28,12 +28,43 @@
   gap: var(--espacio-md);
 }
 
-/* En el celu el menú no entra: lo escondo y quedan solo el logo y el botón de tema.
-   Igual es una página corta, se recorre bien scrolleando. */
+/* En el celu el menú está escondido y se abre con el botón hamburguesa (js/menu.js le pone
+   .header--menu-abierto al header). Abierto, es un panel que baja debajo del header con los
+   links uno debajo del otro, grandes para tocarlos fácil con el dedo. */
 .nav {
   display: none;
-  margin-left: auto; /* empuja el menú (y el botón de tema) a la derecha */
+  margin-left: auto; /* en pantallas grandes empuja el menú (y el botón de tema) a la derecha */
   gap: var(--espacio-md);
+}
+
+.header--menu-abierto .nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  position: absolute; /* respecto del header (que es sticky, o sea "posicionado") */
+  top: 100%;          /* justo debajo del header */
+  left: 0;
+  right: 0;
+  padding: var(--espacio-xs) var(--espacio-md) var(--espacio-md);
+  background-color: var(--color-fondo);
+  border-bottom: 1px solid var(--color-borde);
+  animation: menu-bajar 200ms ease;
+}
+
+.header--menu-abierto .nav a {
+  padding-block: 0.85rem;
+  font-size: var(--texto-medio);
+  color: var(--color-texto);
+  border-bottom: 1px solid var(--color-borde);
+}
+
+.header--menu-abierto .nav a:last-child {
+  border-bottom: none;
+}
+
+@keyframes menu-bajar {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: none; }
 }
 
 .nav a {
@@ -58,6 +89,11 @@
 
   .boton-tema {
     margin-left: 0;
+  }
+
+  /* En pantallas grandes el menú siempre se ve: el botón hamburguesa no hace falta */
+  .boton-menu {
+    display: none;
   }
 }
 
@@ -186,6 +222,15 @@
   border-color: var(--color-acento);
   transform: translateY(-3px);
   box-shadow: 0 12px 30px -18px var(--color-acento);
+}
+
+/* Captura del proyecto, arriba de la tarjeta, con el mismo borde que la tarjeta */
+.proyecto__imagen {
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio);
+  margin-bottom: var(--espacio-md);
 }
 
 .proyecto__cabecera {

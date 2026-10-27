@@ -181,3 +181,43 @@
   opacity: 0;
   transform: rotate(-90deg) scale(0.5);
 }
+
+/* --------------------------------------------------------------------------
+   BOTÓN HAMBURGUESA (solo en el celu; en pantallas grandes lo esconde secciones.css)
+   Tres rayitas apiladas. Al abrir el menú, la de arriba y la de abajo giran y se cruzan
+   formando una X, y la del medio desaparece.
+   -------------------------------------------------------------------------- */
+.boton-menu {
+  width: 2.5rem;
+  height: 2.5rem;
+  display: grid;
+  place-content: center;
+  gap: 5px;
+  flex-shrink: 0;
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio);
+  color: var(--color-texto);
+}
+
+.boton-menu__raya {
+  display: block;
+  width: 1.1rem;
+  height: 2px;
+  border-radius: 2px;
+  background-color: currentColor;
+  transition: transform var(--transicion), opacity var(--transicion);
+}
+
+/* Abierto: 7px = alto de la raya (2px) + espacio entre rayas (5px). Muevo la de arriba
+   hacia abajo y la de abajo hacia arriba, hasta el lugar de la del medio, y las giro. */
+.header--menu-abierto .boton-menu__raya:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.header--menu-abierto .boton-menu__raya:nth-child(2) {
+  opacity: 0;
+}
+
+.header--menu-abierto .boton-menu__raya:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}

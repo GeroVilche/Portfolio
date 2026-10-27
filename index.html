@@ -21,6 +21,20 @@
     })();
   </script>
 
+  <!-- Open Graph: lo que muestran WhatsApp, LinkedIn, etc. cuando comparto el link (título, texto e imagen).
+       Ojo: og:image y og:url van con la URL completa (https://...), porque las lee el servidor de esas
+       apps, no mi página. Si publico en otra dirección (o compro un dominio), cambio estas dos. -->
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="es_AR" />
+  <meta property="og:title" content="Gerónimo Vilche | Desarrollador Full Stack Jr" />
+  <meta property="og:description" content="Proyectos en producción con JavaScript, Node.js y Express. Mirá lo que construí y descargá mi CV." />
+  <meta property="og:url" content="https://gerovilche.github.io/Portfolio/" />
+  <meta property="og:image" content="https://gerovilche.github.io/Portfolio/img/og-image.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Gerónimo Vilche, desarrollador full stack jr" />
+  <meta name="twitter:card" content="summary_large_image" />
+
   <!-- Favicon: el .ico para la pestaña, el .png grande para Android y el apple-touch-icon para iPhone.
        Siempre en la versión oscura del logo: tiene fondo propio, así se ve bien en pestañas claras y oscuras. -->
   <link rel="icon" href="img/favicon.ico" sizes="48x48" />
@@ -48,7 +62,7 @@
   <a href="#contenido" class="saltar-al-contenido">Saltar al contenido</a>
 
   <!-- ============================== HEADER ============================== -->
-  <header class="header">
+  <header class="header" id="header">
     <div class="contenedor header__interior">
 
       <a href="#" class="logo" aria-label="Gerónimo Vilche, ir al inicio">
@@ -62,7 +76,9 @@
         <span class="logo__nombre">Gerónimo Vilche</span>
       </a>
 
-      <nav class="nav" aria-label="Principal">
+      <!-- En el celu el menú se esconde y se abre con el botón hamburguesa (js/menu.js).
+           En pantallas grandes se ve siempre, en línea. -->
+      <nav class="nav" id="menuPrincipal" aria-label="Principal">
         <a href="#proyectos">Proyectos</a>
         <a href="#stack">Stack</a>
         <a href="#sobre-mi">Sobre mí</a>
@@ -79,6 +95,14 @@
         <svg class="boton-tema__icono boton-tema__icono--luna" viewBox="0 0 24 24" aria-hidden="true">
           <path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z" />
         </svg>
+      </button>
+
+      <!-- Botón hamburguesa (solo en el celu). Las 3 rayitas son <span> que el CSS convierte en una X
+           cuando el menú está abierto. aria-expanded le dice al lector de pantalla si está abierto. -->
+      <button type="button" class="boton-menu" id="botonMenu" aria-label="Abrir menú" aria-expanded="false" aria-controls="menuPrincipal">
+        <span class="boton-menu__raya"></span>
+        <span class="boton-menu__raya"></span>
+        <span class="boton-menu__raya"></span>
       </button>
 
     </div>
@@ -123,6 +147,13 @@
         <h2 class="seccion__titulo">Lo que construí</h2>
 
         <article class="proyecto">
+          <!-- Captura: el sitio en la compu y, adelante, el celu con la tarjeta del turno recién reservado.
+               loading="lazy": la carga recién cuando se acerca a la pantalla (no está arriba de todo).
+               width/height: el navegador reserva el lugar antes de que cargue, así la página no "salta". -->
+          <img class="proyecto__imagen" src="img/proyecto-oreja-details.webp" width="1600" height="1000"
+               alt="El Oreja Details en la compu y en el celular, con la tarjeta de un turno recién reservado"
+               loading="lazy" decoding="async" />
+
           <div class="proyecto__cabecera">
             <h3 class="proyecto__titulo">El Oreja Details</h3>
             <p class="proyecto__estado">En producción</p>
@@ -286,6 +317,7 @@
   </footer>
 
   <script src="js/tema.js"></script>
+  <script src="js/menu.js"></script>
   <script src="js/animaciones.js"></script>
   <script src="js/contacto.js"></script>
 </body>
