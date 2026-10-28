@@ -31,9 +31,9 @@
    (poco contraste), así que uso el mismo tono pero más oscuro.
    -------------------------------------------------------------------------- */
 :root[data-tema="claro"] {
-  --color-fondo: #f7f7f8;
-  --color-superficie: #ffffff;
-  --color-borde: #e2e3e6;
+  --color-fondo: #efeeeb;          /* gris cálido: menos brillante que el blanco, descansa la vista */
+  --color-superficie: #f8f7f5;     /* tarjetas: apenas más claras que el fondo, sin llegar a blanco puro */
+  --color-borde: #dddbd6;
   --color-texto: #16181c;
   --color-texto-suave: #5f636b;
   --color-acento: #3b5bdb;
