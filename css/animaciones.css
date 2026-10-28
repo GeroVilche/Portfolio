@@ -1,0 +1,116 @@
+/* ==========================================================================
+   ANIMACIONES
+   Todas sutiles. Al final, un bloque las apaga si el visitante pidió
+   "reducir movimiento" en su sistema (accesibilidad).
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. EL LOGO SE DIBUJA AL CARGAR
+   Truco con SVG: stroke-dasharray hace el borde "punteado" con un solo guion del largo
+   de todo el borde (148 = perímetro del cuadrado: 37 x 4). stroke-dashoffset corre ese
+   guion fuera de la vista; animándolo a 0, el borde aparece como si se trazara.
+   -------------------------------------------------------------------------- */
+.logo__borde {
+  stroke-dasharray: 148;
+  stroke-dashoffset: 148;
+  animation: dibujar-borde 900ms ease-out 150ms forwards;
+}
+
+.logo__letras {
+  opacity: 0;
+  animation: aparecer 500ms ease-out 700ms forwards; /* "GV" aparece cuando el borde casi terminó */
+}
+
+@keyframes dibujar-borde {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes aparecer {
+  to {
+    opacity: 1;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   2. ENTRADA DEL HERO EN CASCADA
+   Cada elemento con .entrada tiene en el HTML style="--orden: N". El retraso se calcula
+   con ese número, así cada uno arranca 90 ms después del anterior.
+   forwards: al terminar, se queda en el estado final (visible) y no vuelve al principio.
+   -------------------------------------------------------------------------- */
+.entrada {
+  opacity: 0;
+  animation: subir 700ms cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
+  animation-delay: calc(250ms + var(--orden, 0) * 90ms);
+}
+
+@keyframes subir {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   3. SECCIONES QUE APARECEN AL SCROLLEAR
+   js/animaciones.js le agrega .revelar--visible a cada .revelar cuando entra en pantalla.
+   Ojo: el estado "escondido" solo aplica si <html> tiene la clase .js (la pone animaciones.js).
+   Si el JS falla o está desactivado, las secciones se ven igual: nunca quedan invisibles.
+   -------------------------------------------------------------------------- */
+.js .revelar {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 700ms ease, transform 700ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.js .revelar.revelar--visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* --------------------------------------------------------------------------
+   4. TARJETAS DE PROYECTO AL PASAR EL MOUSE
+   Está en css/secciones.css (.proyecto:hover), junto al resto de la tarjeta.
+   -------------------------------------------------------------------------- */
+
+/* --------------------------------------------------------------------------
+   5. CAMBIO DE TEMA
+   Los colores de fondo/texto ya tienen transition en base.css y secciones.css.
+   Acá, el giro de los íconos de sol y luna.
+   -------------------------------------------------------------------------- */
+.boton-tema__icono {
+  transition: opacity 300ms ease, transform 400ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+/* --------------------------------------------------------------------------
+   REDUCIR MOVIMIENTO
+   Si el sistema del visitante tiene activado "reducir movimiento" (a algunas personas
+   las animaciones les generan mareo), apago todo y muestro cada cosa en su estado final.
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-delay: 0ms !important;
+    transition-duration: 1ms !important;
+  }
+
+  .js .revelar {
+    opacity: 1;
+    transform: none;
+  }
+
+  .proyecto:hover {
+    transform: none;
+  }
+}

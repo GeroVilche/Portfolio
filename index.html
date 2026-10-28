@@ -1,277 +1,304 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es-AR">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Gerónimo Vilche — Desarrollo web</title>
-  <meta name="description" content="Desarrollo de páginas web para negocios locales. Landing pages, sistemas de turnos y mantenimiento." />
+  <title>Gerónimo Vilche | Desarrollador Full Stack Jr</title>
+  <meta name="description" content="Portfolio de Gerónimo Vilche, desarrollador full stack jr de Tandil, Argentina. Proyectos en producción con JavaScript, Node.js y Express." />
 
-  <!-- Tipografías -->
+  <!-- Antes de que se pinte nada, decido el tema (oscuro/claro). Va acá arriba y no en js/tema.js
+       porque si esperara a cargar el archivo, la página se vería un instante en el tema equivocado
+       (ese "parpadeo" se llama FOUC). Orden: lo que eligió el visitante antes > lo que usa su sistema.
+       Ojo: localStorage puede fallar (modo privado, cookies bloqueadas), por eso el try/catch. -->
+  <script>
+    (function () {
+      var tema;
+      try { tema = localStorage.getItem('tema'); } catch (e) {}
+      if (tema !== 'claro' && tema !== 'oscuro') {
+        tema = window.matchMedia('(prefers-color-scheme: light)').matches ? 'claro' : 'oscuro';
+      }
+      document.documentElement.dataset.tema = tema;
+    })();
+  </script>
+
+  <!-- Open Graph: lo que muestran WhatsApp, LinkedIn, etc. cuando comparto el link (título, texto e imagen).
+       Ojo: og:image y og:url van con la URL completa (https://...), porque las lee el servidor de esas
+       apps, no mi página. Si publico en otra dirección (o compro un dominio), cambio estas dos. -->
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="es_AR" />
+  <meta property="og:title" content="Gerónimo Vilche | Desarrollador Full Stack Jr" />
+  <meta property="og:description" content="Proyectos en producción con JavaScript, Node.js y Express. Mirá lo que construí y descargá mi CV." />
+  <meta property="og:url" content="https://gerovilche.github.io/Portfolio/" />
+  <meta property="og:image" content="https://gerovilche.github.io/Portfolio/img/og-image.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Gerónimo Vilche, desarrollador full stack jr" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- Favicon: el .ico para la pestaña, el .png grande para Android y el apple-touch-icon para iPhone.
+       Siempre en la versión oscura del logo: tiene fondo propio, así se ve bien en pestañas claras y oscuras. -->
+  <link rel="icon" href="img/favicon.ico" sizes="48x48" />
+  <link rel="icon" href="img/favicon.png" type="image/png" sizes="192x192" />
+  <link rel="apple-touch-icon" href="img/apple-touch-icon.png" />
+
+  <!-- Tipografías: IBM Plex Sans (todo el texto) e IBM Plex Mono (etiquetas, tags, detalles técnicos).
+       Si las cambio, actualizo también --font-sans y --font-mono en css/variables.css -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
-  <!-- Estilos: separados por responsabilidad para poder escalar el proyecto -->
-  <link rel="stylesheet" href="variables.css" />
-  <link rel="stylesheet" href="base.css" />
-  <link rel="stylesheet" href="main.css" />
+  <!-- Estilos, en este orden: variables (colores, tipos, espacios) -> base (reset y etiquetas sueltas)
+       -> componentes (piezas que se repiten) -> secciones (cada parte de la página) -> animaciones -->
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/componentes.css" />
+  <link rel="stylesheet" href="css/secciones.css" />
+  <link rel="stylesheet" href="css/animaciones.css" />
 </head>
 <body>
 
+  <!-- Link oculto para quien navega con teclado o lector de pantalla: aparece al apretar Tab
+       y salta directo al contenido, sin pasar por todo el menú -->
+  <a href="#contenido" class="saltar-al-contenido">Saltar al contenido</a>
+
   <!-- ============================== HEADER ============================== -->
-  <header class="header">
-    <div class="header__inner">
-      <a href="#" class="header__logo">
-        <!-- Cuando esté listo el isotipo: reemplazar por <img class="header__logo-mark" src="..." alt="GeroDev"> -->
-        <span class="header__logo-bracket">&lt;</span>GeroDev<span class="header__logo-bracket">/&gt;</span>
+  <header class="header" id="header">
+    <div class="contenedor header__interior">
+
+      <a href="#" class="logo" aria-label="Gerónimo Vilche, ir al inicio">
+        <!-- El logo es un SVG en el HTML (y no un <img>) para poder animar el borde con CSS:
+             el cuadrado se "dibuja" al cargar (ver .logo__borde en css/animaciones.css).
+             Los colores salen de las variables, así cambia solo con el tema. -->
+        <svg class="logo__marca" viewBox="0 0 40 40" aria-hidden="true">
+          <rect class="logo__borde" x="1.5" y="1.5" width="37" height="37" />
+          <text class="logo__letras" x="20" y="21">GV</text>
+        </svg>
+        <span class="logo__nombre">Gerónimo Vilche</span>
       </a>
-      <nav class="header__nav">
+
+      <!-- En el celu el menú se esconde y se abre con el botón hamburguesa (js/menu.js).
+           En pantallas grandes se ve siempre, en línea. -->
+      <nav class="nav" id="menuPrincipal" aria-label="Principal">
+        <a href="#proyectos">Proyectos</a>
+        <a href="#stack">Stack</a>
         <a href="#sobre-mi">Sobre mí</a>
-        <a href="#planes">Planes</a>
-        <a href="#portfolio">Portfolio</a>
         <a href="#contacto">Contacto</a>
       </nav>
+
+      <!-- Botón de tema: js/tema.js cambia data-tema en <html> y el CSS hace el resto.
+           Tiene los dos íconos; el CSS muestra el sol en modo oscuro (para pasar a claro) y la luna en claro. -->
+      <button type="button" class="boton-tema" id="botonTema" aria-label="Cambiar a modo claro">
+        <svg class="boton-tema__icono boton-tema__icono--sol" viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="12" cy="12" r="4.5" />
+          <path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8" />
+        </svg>
+        <svg class="boton-tema__icono boton-tema__icono--luna" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z" />
+        </svg>
+      </button>
+
+      <!-- Botón hamburguesa (solo en el celu). Las 3 rayitas son <span> que el CSS convierte en una X
+           cuando el menú está abierto. aria-expanded le dice al lector de pantalla si está abierto. -->
+      <button type="button" class="boton-menu" id="botonMenu" aria-label="Abrir menú" aria-expanded="false" aria-controls="menuPrincipal">
+        <span class="boton-menu__raya"></span>
+        <span class="boton-menu__raya"></span>
+        <span class="boton-menu__raya"></span>
+      </button>
+
     </div>
   </header>
 
-  <main>
+  <main id="contenido">
 
     <!-- ============================== HERO ============================== -->
-    <section class="hero container">
-      <div class="hero__content">
-        <p class="hero__eyebrow">Desarrollo web · Tandil</p>
-        <h1 class="hero__title">
-          Sitios web que <em>resuelven</em>, no solo que se ven bien.
-        </h1>
-        <p class="hero__subtitle">
-          Soy Gerónimo Vilche. Diseño y desarrollo páginas para negocios
-          locales — rápidas, claras y pensadas para conseguir más
-          clientes. Antes de escribir una línea de código me tomo el
-          tiempo de entender qué necesita tu negocio: esa atención al
-          detalle es la base de cada proyecto que armo.
+    <!-- Los elementos con .entrada aparecen en cascada al cargar; --orden marca el turno de cada uno -->
+    <section class="hero contenedor">
+      <!-- La foto va primero en el HTML (en el celu queda arriba del texto) y el CSS la pasa
+           a la derecha en pantallas grandes. El marco es un cuadrado con borde de acento, como el logo. -->
+      <figure class="hero__foto entrada" style="--orden: 1">
+        <img src="img/foto.webp" alt="Foto de Gerónimo Vilche" width="480" height="480" fetchpriority="high" />
+      </figure>
+
+      <div class="hero__contenido">
+        <p class="etiqueta entrada" style="--orden: 0">Desarrollador Full Stack Jr · Tandil, Argentina</p>
+        <h1 class="hero__titulo entrada" style="--orden: 1">Desarrollo web con atención al detalle.</h1>
+        <p class="hero__texto entrada" style="--orden: 2">
+          Soy desarrollador full stack jr. Me importa que lo que hago funcione bien, sea fácil de usar y se adapte a cualquier pantalla. Busco mi primer puesto en un equipo de desarrollo.
         </p>
-        <div class="hero__actions">
-          <a href="#planes" class="btn btn--accent">Ver planes</a>
-          <a href="#contacto" class="btn btn--outline">Hablemos por WhatsApp</a>
+        <div class="hero__acciones entrada" style="--orden: 3">
+          <a href="#proyectos" class="boton boton--principal">Ver proyectos</a>
+          <!-- download: el navegador lo descarga en vez de abrirlo. El archivo va en la carpeta cv/ -->
+          <a href="cv/Curriculum-Geronimo-Vilche.pdf" class="boton boton--secundario" download>Descargar CV</a>
+        </div>
+        <ul class="hero__redes entrada" style="--orden: 4">
+          <li><a href="https://github.com/GeroVilche" target="_blank" rel="noopener">GitHub</a></li>
+          <li><a href="https://www.linkedin.com/in/geronimo-vilche-160ab4274/" target="_blank" rel="noopener">LinkedIn</a></li>
+          <li><a href="mailto:geroov49@gmail.com">geroov49@gmail.com</a></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============================== PROYECTOS ============================== -->
+    <!-- .revelar: la sección aparece con un fade cuando entra en pantalla (js/animaciones.js) -->
+    <section class="seccion revelar" id="proyectos">
+      <div class="contenedor">
+        <p class="etiqueta">Proyectos</p>
+        <h2 class="seccion__titulo">Lo que construí</h2>
+
+        <article class="proyecto">
+          <!-- Captura: el sitio en la compu y, adelante, el celu con la tarjeta del turno recién reservado.
+               loading="lazy": la carga recién cuando se acerca a la pantalla (no está arriba de todo).
+               width/height: el navegador reserva el lugar antes de que cargue, así la página no "salta". -->
+          <img class="proyecto__imagen" src="img/proyecto-oreja-details.webp" width="1600" height="1000"
+               alt="El Oreja Details en la compu y en el celular, con la tarjeta de un turno recién reservado"
+               loading="lazy" decoding="async" />
+
+          <div class="proyecto__cabecera">
+            <h3 class="proyecto__titulo">El Oreja Details</h3>
+            <p class="proyecto__estado">En producción</p>
+          </div>
+
+          <p class="proyecto__descripcion">
+            Sitio para un negocio de detailing de autos con un sistema de turnos online: el cliente elige
+            servicio, día y horario libre, y el turno queda cargado en el Google Calendar del negocio.
+            Cada reserva genera un link personal para ver, reprogramar o cancelar el turno.
+          </p>
+
+          <!-- Lo que resolví: es lo que más mira alguien técnico. Problemas reales, no solo tecnologías. -->
+          <h4 class="proyecto__subtitulo">Lo que resolví</h4>
+          <ul class="proyecto__puntos">
+            <li>API REST con Node.js y Express que calcula la disponibilidad real contra Google Calendar, con margen entre turnos y horarios por día (incluye horario cortado y días cerrados).</li>
+            <li>Configuración del negocio en un solo archivo, que el frontend lee desde la API: el sistema se adapta a otro negocio sin tocar código.</li>
+            <li>Seguridad: validación de todos los datos en el backend, CORS restringido, límite de pedidos por IP y prevención de XSS en el frontend.</li>
+            <li>Fechas y horas en hora de Argentina sin depender de la zona horaria del servidor.</li>
+            <li>Deploy con frontend en GitHub Pages y backend en Render, con variables de entorno y trabajo por ramas y Pull Requests.</li>
+          </ul>
+
+          <ul class="tags" aria-label="Tecnologías del proyecto">
+            <li>JavaScript</li>
+            <li>Node.js</li>
+            <li>Express</li>
+            <li>Google Calendar API</li>
+            <li>HTML</li>
+            <li>CSS</li>
+            <li>Render</li>
+          </ul>
+
+          <div class="proyecto__links">
+            <a href="https://gerovilche.github.io/El-Oreja-Details/" class="boton boton--principal" target="_blank" rel="noopener">Ver demo</a>
+            <a href="https://github.com/GeroVilche/El-Oreja-Details" class="boton boton--secundario" target="_blank" rel="noopener">Código frontend</a>
+            <a href="https://github.com/GeroVilche/El-Oreja-Backend" class="boton boton--secundario" target="_blank" rel="noopener">Código backend</a>
+          </div>
+
+          <p class="proyecto__nota">
+            Demo con datos de ejemplo: si reservás un turno de prueba, llega a mi calendario.
+          </p>
+        </article>
+
+        <!-- Próximos proyectos: copio el <article class="proyecto"> de arriba y cambio el contenido.
+             Ya tiene margen entre uno y otro (.proyecto + .proyecto en css/secciones.css). -->
+      </div>
+    </section>
+
+    <!-- ============================== STACK ============================== -->
+    <section class="seccion revelar" id="stack">
+      <div class="contenedor">
+        <p class="etiqueta">Stack</p>
+        <h2 class="seccion__titulo">Con qué trabajo</h2>
+
+        <!-- Solo pongo lo que usé de verdad en proyectos. Lo que estoy estudiando va aparte. -->
+        <div class="stack">
+          <div class="stack__grupo">
+            <h3 class="stack__titulo">Frontend</h3>
+            <ul class="tags">
+              <li>HTML</li>
+              <li>CSS</li>
+              <li>JavaScript</li>
+            </ul>
+          </div>
+          <div class="stack__grupo">
+            <h3 class="stack__titulo">Backend</h3>
+            <ul class="tags">
+              <li>Node.js</li>
+              <li>Express</li>
+              <li>APIs REST</li>
+              <li>Google Calendar API</li>
+              <li>Google Apps Script</li>
+            </ul>
+          </div>
+          <div class="stack__grupo">
+            <h3 class="stack__titulo">Herramientas</h3>
+            <ul class="tags">
+              <li>Git</li>
+              <li>GitHub</li>
+              <li>Render</li>
+              <li>GitHub Pages</li>
+            </ul>
+          </div>
+          <!-- Lo que estoy estudiando: .tags--aprendiendo lo muestra con borde punteado,
+               para que quede claro que todavía no lo domino. Lo actualizo a medida que avanzo. -->
+          <div class="stack__grupo">
+            <h3 class="stack__titulo">Aprendiendo ahora</h3>
+            <ul class="tags tags--aprendiendo">
+              <li>Python</li>
+              <li>SQL</li>
+            </ul>
+          </div>
         </div>
       </div>
     </section>
 
     <!-- ============================== SOBRE MÍ ============================== -->
-    <section class="about" id="sobre-mi">
-      <div class="container about__grid">
-        <h2 class="about__label">Sobre mí</h2>
-        <div class="about__card">
+    <section class="seccion revelar" id="sobre-mi">
+      <div class="contenedor sobre-mi">
+        <div>
+          <p class="etiqueta">Sobre mí</p>
+          <h2 class="seccion__titulo">Aprendo construyendo</h2>
+        </div>
+        <div class="sobre-mi__texto">
           <p>
-            Aprendí a programar por necesidad de crear algo útil: páginas
-            que no solo se vean bien, sino que ayuden a un negocio a
-            conseguir más clientes.
+            Soy de Tandil y me dedico de lleno a la programación. Estudio la Tecnicatura Universitaria
+            en Desarrollo de Aplicaciones Informáticas (UNICEN) y me formo también por mi cuenta, con un
+            método claro: aprender cada concepto aplicándolo en proyectos reales, hasta llevarlos a producción.
           </p>
-          <blockquote class="about__quote">
-            Sé lo que es atender a alguien que necesita una solución rápida
-            y bien hecha — es lo mismo que busco transmitir en cada página
-            que armo: simple, clara, y que resuelva lo que el negocio
-            necesita, sin vueltas.
-          </blockquote>
           <p>
-            Hoy estoy desarrollando mi primer proyecto para un negocio
-            local, con la idea de ir sumando clientes de a poco y, con el
-            tiempo, dedicarme de lleno al desarrollo web.
+            Trabajé casi tres años como mozo y barman. De esa etapa me quedó algo que uso todos los días: entender el problema o la necesidad de la otra persona y resolverlo de la mejor manera posible.
           </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============================== PLANES ============================== -->
-    <section class="section" id="planes">
-      <div class="container">
-        <p class="section__eyebrow">Planes</p>
-        <h2 class="section__title">Elegí lo que necesita tu negocio</h2>
-
-        <div class="plans__tabs" role="tablist">
-          <button class="plans__tab is-active" data-target="panel-desarrollo" role="tab" aria-selected="true">Desarrollo</button>
-          <button class="plans__tab" data-target="panel-mantenimiento" role="tab" aria-selected="false">Mantenimiento</button>
-        </div>
-
-        <!-- Panel: Desarrollo -->
-        <div class="plans__grid plans__panel is-active" id="panel-desarrollo" role="tabpanel">
-
-          <article class="plan-card plan-card--dev">
-            <h3 class="plan-card__name">Básico</h3>
-            <ul class="plan-card__items">
-              <li>Landing page de una sola página (responsive, se adapta a celular y PC)</li>
-              <li>Secciones de presentación, servicios y precios</li>
-              <li>Ubicación con mapa integrado</li>
-              <li>Boton de contacto directo por WhatsApp</li>
-            </ul>
-            <p class="plan-card__price plan-card__price--dev">
-              Desde USD 150
-              <span>Perfecto si necesitás una presencia online clara y rápida, sin funciones adicionales.</span>
-            </p>
-            <a href="#contacto" class="btn btn--accent">Elegir</a>
-          </article>
-
-          <article class="plan-card plan-card--dev">
-            <h3 class="plan-card__name">Intermedio</h3>
-            <ul class="plan-card__items">
-              <li>Todo lo del plan Básico</li>
-              <li>Formulario de reserva de turnos integrado a la página</li>
-              <li>Vista de horarios disponibles y ocupados en tiempo real</li>
-              <li>Notificación automática por WhatsApp al confirmar el turno</li>
-              <li>Validación de datos para evitar errores de carga</li>
-            </ul>
-            <p class="plan-card__price plan-card__price--dev">
-              Desde USD 300
-              <span>Pensado para negocios que atienden por turno y quieren ordenar su agenda sin perder mensajes.</span>
-            </p>
-            <a href="#contacto" class="btn btn--accent">Elegir</a>
-          </article>
-
-          <article class="plan-card plan-card--dev">
-            <h3 class="plan-card__name">Avanzado</h3>
-            <ul class="plan-card__items">
-              <li>Todo lo del plan Intermedio</li>
-              <li>Panel de administración privado para editar precios, fotos y productos vos mismo</li>
-              <li>Cátalogo de productos con imágenes y precios</li>
-              <li>Mínimo mantenimiento externo necesario</li>
-              <li>Optimización SEO para aparecer mejor en Google y en búsquedas locales</li>
-            </ul>
-            <p class="plan-card__price plan-card__price--dev">
-              A cotizar
-              <span>Ideal si además de mostrar tu negocio, querés vender productos y manejar todo el contenido de forma autónoma.</span>
-            </p>
-            <a href="#contacto" class="btn btn--accent">Elegir</a>
-          </article>
-
-        </div>
-
-        <!-- Panel: Mantenimiento -->
-        <div class="plans__grid plans__panel" id="panel-mantenimiento" role="tabpanel" hidden>
-
-          <article class="plan-card plan-card--maint">
-            <h3 class="plan-card__name">Básico</h3>
-            <ul class="plan-card__items">
-              <li>Hasta 2 cambios de contenido por mes (textos, precios, imágenes)</li>
-              <li>Renovación y gestión del dominio incluida</li>
-              <li>Respuesta a consultas en 48-72 hs</li>
-              <li>Sin cambios de diseño o estructura</li>
-            </ul>
-            <p class="plan-card__price plan-card__price--maint">
-              Desde USD 20
-              <span>Pensado para el Plan de Desarrollo Básico e Intermedio.</span>
-            </p>
-            <a href="#contacto" class="btn btn--accent">Elegir</a>
-          </article>
-
-          <article class="plan-card plan-card--maint">
-            <h3 class="plan-card__name">Intermedio</h3>
-            <ul class="plan-card__items">
-              <li>Todo lo del Básico</li>
-              <li>Hasta 5 cambios de contenido por mes</li>
-              <li>Monitoreo de que el sistema de turnos funcione correctamente</li>
-              <li>Respuesta a consultas en 24-48 hs</li>
-            </ul>
-            <p class="plan-card__price plan-card__price--maint">
-              Desde USD 30
-              <span>Pensado para el plan de Desarrollo Intermedio.</span>
-            </p>
-            <a href="#contacto" class="btn btn--accent">Consultar</a>
-          </article>
-
-          <article class="plan-card plan-card--maint">
-            <h3 class="plan-card__name">Avanzado</h3>
-            <ul class="plan-card__items">
-              <li>Todo lo del Intermedio</li>
-              <li>Cambios de contenido ilimitados razonables</li>
-              <li>Soporte técnico prioritario (mismo dia o 24 hs)</li>
-              <li>Backups periódicos de la base de datos</li>
-              <li>Actualizaciones de seguridad del backend/panel admin</li>
-              <li>Ajustes menores de funcionalidad incluidos</li>
-            </ul>
-            <p class="plan-card__price plan-card__price--maint">
-              Desde USD 50
-              <span>Pensado para el plan de Desarrollo Avanzado.</span>
-            </p>
-            <a href="#contacto" class="btn btn--accent">Elegir</a>
-          </article>
-
-        </div>
-      </div>
-    </section>
-
-    <!-- ============================== PORTFOLIO ============================== -->
-    <section class="section" id="portfolio" style="background: var(--color-ink-soft);">
-      <div class="container">
-        <p class="section__eyebrow">Trabajos</p>
-        <h2 class="section__title">Portfolio</h2>
-
-        <div class="portfolio__grid">
-          <article class="project-card">
-            <p class="project-card__status">En desarrollo</p>
-            <h3 class="project-card__title">Lavadero — landing con turnos</h3>
-            <p class="project-card__desc">
-              Página para un lavadero de autos: promoción del negocio,
-              sistema de reserva de turnos confirmados por WhatsApp y
-              sección de venta de productos.
-            </p>
-          </article>
-
-          <!--
-            Próximos proyectos: agregar un <article class="project-card">
-            por cada trabajo nuevo, siguiendo la misma estructura.
-          -->
+          <p>
+            Me interesa todo el recorrido de una aplicación, del diseño de la interfaz al servidor,
+            y busco sumarme a un equipo donde aprender de gente con más experiencia.
+          </p>
         </div>
       </div>
     </section>
 
     <!-- ============================== CONTACTO ============================== -->
-    <section class="section contact" id="contacto">
-      <div class="container">
-        <h2 class="contact__title">¿Tenés un negocio y queres una pagina para expandirte?</h2>
-        <p class="contact__subtitle">Contame qué necesitás y armamos el plan a medida.</p>
-
-        <form class="contact__form" id="contact-form">
-          <div class="form__group">
-            <label for="contact-name">Nombre</label>
-            <input type="text" id="contact-name" name="nombre" required>
-          </div>
-
-          <div class="form__group">
-            <label for="contact-business">Negocio / rubro</label>
-            <input type="text" id="contact-business" name="negocio" required>
-          </div>
-
-          <div class="form__group">
-            <label for="contact-plan">¿Qué plan te interesa?</label>
-            <select id="contact-plan" name="plan">
-              <option value="No estoy seguro todavía">No estoy seguro todavía</option>
-              <option value="Básico (Desarrollo)">Básico (Desarrollo)</option>
-              <option value="Con reservas (Desarrollo)">Con reservas (Desarrollo)</option>
-              <option value="Avanzado (Desarrollo)">Avanzado (Desarrollo)</option>
-              <option value="Básico (Mantenimiento)">Básico (Mantenimiento)</option>
-              <option value="Intermedio (Mantenimiento)">Intermedio (Mantenimiento)</option>
-              <option value="Avanzado (Mantenimiento)">Avanzado (Mantenimiento)</option>
-            </select>
-          </div>
-
-          <div class="form__group">
-            <label for="contact-message">Contame brevemente qué necesitás</label>
-            <textarea id="contact-message" name="mensaje" rows="4" required></textarea>
-          </div>
-
-          <button type="submit" class="btn btn--accent">Enviar por WhatsApp</button>
-        </form>
-
-        <p class="contact__divider">o escribime directo</p>
-
-        <a
-          href="https://wa.me/5492494009695?text=Hola%20Ger%C3%B3nimo!%20Vi%20tu%20portfolio%20y%20quiero%20consultar%20por%20una%20p%C3%A1gina."
-          class="btn btn--outline"
-          target="_blank"
-          rel="noopener"
-        >
-          Escribime por WhatsApp
-        </a>
+    <section class="seccion revelar contacto" id="contacto">
+      <div class="contenedor">
+        <p class="etiqueta">Contacto</p>
+        <h2 class="seccion__titulo">¿Hablamos?</h2>
+        <p class="contacto__texto">Si tenés una búsqueda abierta o querés charlar sobre algún proyecto, escribime.</p>
+        <!-- Caja de email: el mail dentro de un input de solo lectura (readonly), con dos botones al lado.
+             "Escribir" abre el programa de correo (mailto:) y "Copiar" lo copia al portapapeles (js/contacto.js),
+             para quien usa Gmail en el navegador y no tiene un programa de correo configurado. -->
+        <div class="email-caja">
+          <input type="text" class="email-caja__input" id="emailContacto" value="geroov49@gmail.com" readonly aria-label="Mi email" />
+          <a href="mailto:geroov49@gmail.com" class="email-caja__boton">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="1.5" /><path d="m3.5 6 8.5 7 8.5-7" /></svg>
+            Escribir
+          </a>
+          <button type="button" class="email-caja__boton" id="botonCopiar">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="1.5" /><path d="M16 8V5.5A1.5 1.5 0 0 0 14.5 4h-9A1.5 1.5 0 0 0 4 5.5v9A1.5 1.5 0 0 0 5.5 16H8" /></svg>
+            <span id="textoCopiar">Copiar</span>
+          </button>
+        </div>
+        <!-- Mensaje para lectores de pantalla (y por si el copiado falla): aria-live lo anuncia cuando cambia -->
+        <p class="email-caja__aviso" id="avisoCopiado" aria-live="polite"></p>
+        <ul class="contacto__redes">
+          <li><a href="https://www.linkedin.com/in/geronimo-vilche-160ab4274/" target="_blank" rel="noopener">LinkedIn</a></li>
+          <li><a href="https://github.com/GeroVilche" target="_blank" rel="noopener">GitHub</a></li>
+          <li><a href="cv/Curriculum-Geronimo-Vilche.pdf" download>CV en PDF</a></li>
+        </ul>
       </div>
     </section>
 
@@ -279,52 +306,17 @@
 
   <!-- ============================== FOOTER ============================== -->
   <footer class="footer">
-    <p>Gerónimo Vilche — Desarrollo web · Tandil, Argentina</p>
+    <div class="contenedor">
+      <!-- El año lo pone js/animaciones.js, así no queda viejo.
+           A la derecha, el link al código de este sitio: a alguien técnico le interesa verlo. -->
+      <p>© <span id="anio">2026</span> Gerónimo Vilche · Tandil, Argentina</p>
+      <a href="https://github.com/GeroVilche/Portfolio" class="footer__link" target="_blank" rel="noopener">Código de este sitio</a>
+    </div>
   </footer>
 
-  <script>
-    // Toggle simple entre los paneles de planes (Desarrollo / Mantenimiento)
-    const planTabs = document.querySelectorAll('.plans__tab');
-    planTabs.forEach(tab => {
-      tab.addEventListener('click', () => {
-        planTabs.forEach(t => {
-          t.classList.remove('is-active');
-          t.setAttribute('aria-selected', 'false');
-        });
-        tab.classList.add('is-active');
-        tab.setAttribute('aria-selected', 'true');
-
-        document.querySelectorAll('.plans__panel').forEach(panel => {
-          const isTarget = panel.id === tab.dataset.target;
-          panel.classList.toggle('is-active', isTarget);
-          panel.hidden = !isTarget;
-        });
-      });
-    });
-
-    // Formulario de contacto: arma el mensaje y lo manda a WhatsApp
-    const WHATSAPP_NUMBER = '5492494009695';
-    const contactForm = document.getElementById('contact-form');
-
-    contactForm.addEventListener('submit', (event) => {
-      event.preventDefault();
-
-      const nombre = contactForm.nombre.value.trim();
-      const negocio = contactForm.negocio.value.trim();
-      const plan = contactForm.plan.value;
-      const mensaje = contactForm.mensaje.value.trim();
-
-      if (!nombre || !negocio || !mensaje) return;
-
-      const texto =
-        `Hola Gerónimo! Soy ${nombre}, de ${negocio}.\n` +
-        `Plan de interés: ${plan}.\n` +
-        `${mensaje}`;
-
-      const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(texto)}`;
-      window.open(url, '_blank', 'noopener');
-    });
-  </script>
-
+  <script src="js/tema.js"></script>
+  <script src="js/menu.js"></script>
+  <script src="js/animaciones.js"></script>
+  <script src="js/contacto.js"></script>
 </body>
 </html>
